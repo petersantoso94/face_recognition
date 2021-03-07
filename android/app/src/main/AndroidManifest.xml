@@ -14,19 +14,20 @@
         android:label="@string/tfe_od_app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/AppTheme.ObjectDetection">
 
         <activity
             android:name=".SplashScrActivity"
             android:label="@string/tfe_od_app_name"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".DetectorActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".DetectorActivity" />
+            </intent-filter></activity>
 
     </application>
 </manifest>
