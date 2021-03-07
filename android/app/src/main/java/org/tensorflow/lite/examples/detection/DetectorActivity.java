@@ -37,22 +37,16 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Size;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -391,7 +385,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       SimilarityClassifier.Recognition result = mappedRecognitions.get(0);
 
       if(shouldLoadDefault && result.getExtra() != null){
-        Toast.makeText(DetectorActivity.this,"Added",Toast.LENGTH_SHORT).show();
         similarityClassifier.register("peter", result);
         shouldLoadDefault = false;
       }
