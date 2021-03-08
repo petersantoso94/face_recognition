@@ -116,7 +116,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
+    showProgressBar();
     // Real-time contour detection of multiple faces
     FaceDetectorOptions options =
             new FaceDetectorOptions.Builder()
@@ -262,11 +262,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
       return;
     }
     computingDetection = true;
-
     LOGGER.i("Preparing image " + currTimestamp + " for detection in bg thread.");
-
     rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
-
     readyForNextImage();
 
     final Canvas canvas = new Canvas(croppedBitmap);
@@ -376,23 +373,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
 
   private void updateResults(long currTimestamp, final List<SimilarityClassifier.Recognition> mappedRecognitions) {
-
     tracker.trackResults(mappedRecognitions, currTimestamp);
     trackingOverlay.postInvalidate();
     computingDetection = false;
 
     if(mappedRecognitions.size() > 0){
       SimilarityClassifier.Recognition result = mappedRecognitions.get(0);
-
       if(shouldLoadDefault && result.getExtra() != null){
         similarityClassifier.register("peter", result);
         shouldLoadDefault = false;
+        hideProgressBar();
       }
     }
   }
 
   private void onFacesDetected(long currTimestamp, List<Face> faces, boolean add) {
-
     cropCopyBitmap = Bitmap.createBitmap(croppedBitmap);
     final Canvas canvas = new Canvas(cropCopyBitmap);
     final Paint paint = new Paint();
@@ -409,7 +404,6 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
     final List<SimilarityClassifier.Recognition> mappedRecognitions =
             new LinkedList<SimilarityClassifier.Recognition>();
-
 
     // Note this can be done only once
     int sourceW = rgbFrameBitmap.getWidth();
